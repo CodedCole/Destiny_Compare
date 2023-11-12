@@ -14,7 +14,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #313131;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -35,4 +35,60 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.compare {
+  background-color:#D4AF37;
+  height: 100px;
+  width: 300px;
+  float: left; 
+  margin-left: -1px; 
+}
+
+.compare_categories {
+  background-color: #777777;
+  height: 100px;
+  width: 300px;
+  margin-left: -1000px; 
+  margin-top: 5px; 
+}
+
+.compare_categories:hover {
+  background-color: #111;
+}
+
+.compare_inline {
+  display: inline-block; 
+}
+
+.player_name {
+  background-color: #777777;
+  height: 100px;
+  width: 900px;
+  margin-left: 100px; 
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #313131;
+}
+
+li {
+  float: right;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  display: inline-block; 
+}
+
+li a:hover {
+  background-color: #111;
 }
