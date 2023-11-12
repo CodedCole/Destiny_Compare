@@ -92,3 +92,21 @@ li a {
 li a:hover {
   background-color: #111;
 }
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #313131;
+  padding: 10px 10px;
+}
+
+.logo {
+  max-width: 30px;
+  height: auto;
+  cursor: pointer;
+}
+
+.logo img{
+  max-width: 100px;
+}
