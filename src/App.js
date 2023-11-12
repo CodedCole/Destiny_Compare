@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import logo from './logo.svg';
 import './App.css';
-import StatsScreen from './StatsScreen.js';
+import StatsScreen from './statsScreen/StatsScreen.js';
 
 function App() {
   const [users, setUsers] = useState([]);
