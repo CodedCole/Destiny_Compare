@@ -3,12 +3,15 @@ import vanguardLogo from '../images/vanguardSmallIconPNG.png';
 import crucibleLogo from '../images/CrucibleLogo.png';
 function StatsScreen(props) {
     return (<div className="App">
+<<<<<<< HEAD
       <div class="header">
         <ul class="nav">
         <li><a href="App.js">LEADERBOARDS</a></li>
         <li><a href="App.js">COMPARE</a></li>
       </ul>
       </div>
+=======
+>>>>>>> 5d7f1386159d9b1f7ed0d54fbf271592e0b61e2c
       <header className="App-header">
         <div>
          <div class="compare compare_inline">
