@@ -12,7 +12,7 @@ function Navbar({ page, setPage }) {
             <button onClick={() => setPage(1)}>LEADERBOARDS</button>
         </li>
         <li>
-            <button onClick={() => setPage(0)}>LEADERBOARDS</button>
+            <button onClick={() => setPage(0)}>HOME SCREEN</button>
         </li>
         <li>
             <button onClick={() => setPage(0)}>COMPARE</button>
