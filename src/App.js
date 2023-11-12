@@ -18,6 +18,9 @@ function App() {
         <p key={user.id}>{user.name}</p>
       ))}
       </header>
+      <div>
+        <p>Howdy Everyone!</p>
+      </div>
     </div>
   );
 }
