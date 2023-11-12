@@ -1,4 +1,4 @@
-function HomeScreen() {
+export default function HomeScreen() {
     return (
         <div>
             <h1>DESTINY COMPARE</h1>

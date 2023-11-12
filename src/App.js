@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import logo from './logo.svg';
 import './App.css';
+import HomeScreen from './homeScreen/homeScreen.js'
 
 function App() {
   const [users, setUsers] = useState([]);
@@ -18,9 +19,7 @@ function App() {
         <p key={user.id}>{user.name}</p>
       ))}
       </header>
-      <div>
-        <p>Howdy Everyone!</p>
-      </div>
+      <HomeScreen />
     </div>
   );
 }
