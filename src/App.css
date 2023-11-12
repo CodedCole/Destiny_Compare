@@ -62,40 +62,24 @@
 }
 
 .player_name {
+  background-color: #777777;
   height: 100px;
   width: 900px;
   margin-left: 100px; 
-  background-image: url("./images/emblemPlaceholder.jpg")
 }
 
-.header {
-  position: relative;
-  padding: 20px;
-  background-color: #313131
-}
-
-.nav {
+ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
   background-color: #313131;
-  text-align: center; 
 }
 
-.nav li {
+li {
   float: right;
 }
 
-
-.blockLogo {
-  height: 50px; 
-  width: 50px;
-  display: inline-flex; 
-}
-.text {
-  display: inline-flex; 
-}
 li a {
   display: block;
   color: white;
