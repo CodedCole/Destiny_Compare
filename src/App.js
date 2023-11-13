@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import logo from './logo.svg';
 import './App.css';
+import HomeScreen from './homeScreen/homeScreen.js'
 import StatsScreen from './statsScreen/statsScreen.js';
 import Navbar from './Navbar.js';
 
@@ -13,9 +14,9 @@ function App() {
       .then((res) => res.json())
       .then((data) => setUsers(data));
   }, []);
+  
   if (page == 0) {
     return (
-
       <div className="App">
         <Navbar page={page} setPage={setPage} />  
         <header className="App-header">
@@ -25,6 +26,7 @@ function App() {
           <p key={user.id}>{user.name}</p>
         ))}
         </header>
+        <HomeScreen />
       </div>
     );
   }
