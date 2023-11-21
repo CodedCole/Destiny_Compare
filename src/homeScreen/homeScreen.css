@@ -1,0 +1,62 @@
+:root {
+    --primary-text: #efefef
+}
+
+#welcome {
+    position: relative;
+    padding: 0;
+    width: 100%;
+    height: calc(100% * (9.0/16.0));
+}
+
+#welcome h1 {
+    position: absolute;
+    top: 100%;
+    font-family: 'Familjen Grotesk', sans-serif;
+    color: var(--primary-text);
+    letter-spacing: 0.7em;
+    text-shadow: 0px 4px 4px #00000044;
+    margin: 0;
+    width: 100%;
+}
+
+#welcome h1 .left_of_center {
+    position: absolute;
+    text-align: right;
+    right: calc(50% + 30px);
+}
+#welcome h1 .right_of_center {
+    position: absolute;
+    text-align: left;
+    left: calc(50% + 30px);
+}
+
+#welcome img {
+    position: absolute;
+    left: 0;
+    top: -100px;
+    z-index: -1;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+}
+
+.search_boxes {
+    display: flex;
+    flex-direction: column;
+    padding: 10px calc(50% - 150px);
+}
+
+.player_search {
+    font-family: 'Familjen Grotesk', sans-serif;
+    background-color: #bbbbbb;
+    opacity: 0.3;
+    border: 1px solid #777777;
+    color: var(--primary-text);
+}
+
+.player_search::placeholder {
+    color: #111111;
+    opacity: 1;
+}
