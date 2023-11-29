@@ -102,6 +102,17 @@ li a:hover {
   padding: 10px 10px;
 }
 
+.navbar-button button{
+  background-color: #313131; 
+  font-size: 22px;
+  color: white; 
+  border: none; 
+  padding: 10px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
 .logo {
   max-width: 30px;
   height: auto;
