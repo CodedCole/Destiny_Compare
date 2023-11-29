@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import logo from './logo.svg';
 import './App.css';
 import HomeScreen from './homeScreen/homeScreen.js'
 import StatsScreen from './statsScreen/statsScreen.js';
@@ -15,22 +14,15 @@ function App() {
       .then((data) => setUsers(data));
   }, []);
   
-  if (page == 0) {
+  if (page === 0) {
     return (
       <div className="App">
-        <Navbar page={page} setPage={setPage} />  
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-        <h1>Users</h1>
-        {users.map((user) => (
-          <p key={user.id}>{user.name}</p>
-        ))}
-        </header>
+        <Navbar page={page} setPage={setPage} />
         <HomeScreen />
       </div>
     );
   }
-  if(page == 1) {
+  if(page === 1) {
     return(
     <div className="App">
       <Navbar page={page} setPage={setPage} />
