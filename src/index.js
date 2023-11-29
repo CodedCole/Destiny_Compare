@@ -9,6 +9,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Router> 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Familjen+Grotesk" />
         <App />
   </Router>,
 );
