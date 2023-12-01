@@ -37,38 +37,6 @@
   }
 }
 
-.compare {
-  background-color:#D4AF37;
-  height: 100px;
-  width: 300px;
-  float: left; 
-  margin-left: -1px; 
-}
-
-.compare_categories {
-  background-color: #777777;
-  height: 100px;
-  width: 300px;
-  margin-left: -1000px; 
-  margin-top: 5px; 
-}
-
-.compare_categories:hover {
-  background-color: #111;
-}
-
-.compare_inline {
-  display: inline-block; 
-}
-
-.player_name {
-  background-color: #777777;
-  height: 100px;
-  width: 900px;
-  margin-left: 100px; 
-  background-image: url("./images/emblemPlaceholder.jpg")
-}
-
 ul {
   list-style-type: none;
   margin: 0;
@@ -133,6 +101,7 @@ li a:hover {
   height: 50px; 
   width: 50px;
   display: inline-flex; 
+  transform: translate(-20px, 15px);
 }
 .text {
   display: inline-flex; 
