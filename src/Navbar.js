@@ -8,15 +8,14 @@ function Navbar({ page, setPage }) {
             <img src={logo} alt="Logo" />
         </div>
         <ul>
-        <li>
-            <button onClick={() => setPage(1)}>LEADERBOARDS</button>
-        </li>
-        <li>
-            <button onClick={() => setPage(0)}>HOME SCREEN</button>
-        </li>
-        <li>
-            <button onClick={() => setPage(0)}>COMPARE</button>
-        </li>
+        <div className="navbar-button">
+            <li>
+                <button onClick={() => setPage(1)}>COMPARE</button>
+            </li>
+            <li>
+                <button onClick={() => setPage(0)}>HOME SCREEN</button>
+            </li>
+        </div>
         </ul>
     </div>
   );
