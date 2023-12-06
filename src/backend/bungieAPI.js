@@ -38,13 +38,37 @@ async function POSTRequest(url, body) {
 export async function SearchForPlayerByBungieID(displayName) {
     const response = await POSTRequest(
         "https://www.bungie.net/Platform/User/Search/GlobalName/0/",
-        {
-            "displayNamePrefix": `${displayName}`
-        }
+        { "displayNamePrefix": `${displayName}` }
     );
-    return response;
+
+    if (response.ErrorStatus !== "Success") {
+        console.error(response);
+        return null;
+    }
+
+    var simplified = {
+        "searchResults": []
+    };
+
+    for (var i = 0; i < response.Response.searchResults.length; i++) {
+        const result = response.Response.searchResults[i];
+        var crossSaveAccount;
+        // find destiny membership used for cross save, which is the player's primary account
+        for (var dm = 0; dm < result.destinyMemberships.length; dm++) {
+            if (result.destinyMemberships[dm].crossSaveOverride === result.destinyMemberships[dm].membershipType) {
+                crossSaveAccount = result.destinyMemberships[dm].membershipId;
+            }
+        }
+
+        simplified.searchResults[i] = {
+            "BungieDisplayName": result.bungieGlobalDisplayName + "#" + result.bungieGlobalDisplayNameCode,
+            "BungieNetMembershipID": result.bungieNetMembershipId,
+            "PrimaryDestinyMembershipID": crossSaveAccount
+        };
+    }
+
+    return simplified;
 }
 
-export async function GetProfileFromBungieMembershipID(membershipID) {
-
+export async function GetProfileFromDestinyMembershipID(membershipID) {
 }
