@@ -1,8 +1,11 @@
 import "./homeScreen.css"
-
 import welcomeImage from "../images/destiny-ghost.jpg"
+import { SearchForPlayerByBungieID } from "../backend/bungieAPI.js";
 
 export default function HomeScreen() {
+    SearchForPlayerByBungieID("CodedCole").then((data) => {
+        console.log(data);
+    });
     return (
         <div id="welcome">
             <img src={welcomeImage} alt="" />

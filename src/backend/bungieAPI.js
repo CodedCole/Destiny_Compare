@@ -1,6 +1,24 @@
-export async function SearchForPlayerByBungieID(displayName) {
+async function GETRequest(url) {
     const response = await fetch(
-        "https://www.bungie.net/Platform/User/Search/GlobalName/0/", 
+        url, 
+        {
+            method: "GET",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+                "x-api-key": "78c131c1852c4ead8fa807307bbae844"
+            },
+            redirect: "follow",
+            referrerPolicy: "no-referrer",
+        });
+    return response.json();
+}
+
+async function POSTRequest(url, body) {
+    const response = await fetch(
+        url, 
         {
             method: "POST",
             mode: "cors",
@@ -12,9 +30,21 @@ export async function SearchForPlayerByBungieID(displayName) {
             },
             redirect: "follow",
             referrerPolicy: "no-referrer",
-            body: {
-                "displayNamePrefix": displayName
-            }
+            body: JSON.stringify(body)
         });
     return response.json();
+}
+
+export async function SearchForPlayerByBungieID(displayName) {
+    const response = await POSTRequest(
+        "https://www.bungie.net/Platform/User/Search/GlobalName/0/",
+        {
+            "displayNamePrefix": `${displayName}`
+        }
+    );
+    return response;
+}
+
+export async function GetProfileFromBungieMembershipID(membershipID) {
+
 }
