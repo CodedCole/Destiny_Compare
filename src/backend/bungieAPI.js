@@ -1,3 +1,4 @@
+// Make a GET request to Bungie.net
 async function GETRequest(url) {
     const response = await fetch(
         url, 
@@ -16,6 +17,7 @@ async function GETRequest(url) {
     return response.json();
 }
 
+// Make a POST request to Bungie.net
 async function POSTRequest(url, body) {
     const response = await fetch(
         url, 
@@ -35,6 +37,8 @@ async function POSTRequest(url, body) {
     return response.json();
 }
 
+// Searches Bungie.net for users whose display name is 'displayName'.
+// Returns all matches as a json object
 export async function SearchForPlayerByBungieID(displayName) {
     const response = await POSTRequest(
         "https://www.bungie.net/Platform/User/Search/GlobalName/0/",
@@ -52,23 +56,40 @@ export async function SearchForPlayerByBungieID(displayName) {
 
     for (var i = 0; i < response.Response.searchResults.length; i++) {
         const result = response.Response.searchResults[i];
-        var crossSaveAccount;
+        var crossSaveMembershipType;
+        var crossSaveMambershipID;
         // find destiny membership used for cross save, which is the player's primary account
         for (var dm = 0; dm < result.destinyMemberships.length; dm++) {
             if (result.destinyMemberships[dm].crossSaveOverride === result.destinyMemberships[dm].membershipType) {
-                crossSaveAccount = result.destinyMemberships[dm].membershipId;
+                crossSaveMembershipType = result.destinyMemberships[dm].membershipType;
+                crossSaveMambershipID = result.destinyMemberships[dm].membershipId;
             }
         }
 
         simplified.searchResults[i] = {
             "BungieDisplayName": result.bungieGlobalDisplayName + "#" + result.bungieGlobalDisplayNameCode,
             "BungieNetMembershipID": result.bungieNetMembershipId,
-            "PrimaryDestinyMembershipID": crossSaveAccount
+            "PrimaryDestinyMembershipType": crossSaveMembershipType,
+            "PrimaryDestinyMembershipID": crossSaveMambershipID
         };
     }
 
     return simplified;
 }
 
-export async function GetProfileFromDestinyMembershipID(membershipID) {
+// Gets profile information from a destiny membership ID (characters, reputation, etc.)
+export async function GetProfileFromDestinyMembershipID(membershipType, membershipID) {
+    const response = await GETRequest(`https://www.bungie.net/Platform/Destiny2/${membershipType}/Profile/${membershipID}/?components=100,200,1100`);
+
+    if (response.ErrorStatus !== "Success")
+    {
+        console.error(response);
+        return null;
+    }
+
+    var simplified = {
+
+    };
+
+    return response;
 }

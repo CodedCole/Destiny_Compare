@@ -1,10 +1,13 @@
 import "./homeScreen.css"
 import welcomeImage from "../images/destiny-ghost.jpg"
-import { SearchForPlayerByBungieID } from "../backend/bungieAPI.js";
+import { SearchForPlayerByBungieID, GetProfileFromDestinyMembershipID } from "../backend/bungieAPI.js";
 
 export default function HomeScreen() {
     SearchForPlayerByBungieID("CodedCole").then((data) => {
         console.log(data);
+        GetProfileFromDestinyMembershipID(data.searchResults[0].PrimaryDestinyMembershipType, data.searchResults[0].PrimaryDestinyMembershipID).then((data) => {
+            console.log(data);
+        });
     });
     return (
         <div id="welcome">
