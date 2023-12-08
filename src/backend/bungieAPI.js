@@ -13,8 +13,16 @@ async function GETRequest(url) {
             },
             redirect: "follow",
             referrerPolicy: "no-referrer",
+        }).then((result) => {
+            if (!result.ok) {
+                throw new Error("HTTP Error " + result.status);
+            }
+            return result.json();
+        }).catch(() => {
+            console.log("failed a fetch");
+            return null;
         });
-    return response.json();
+    return response//.json();
 }
 
 // Make a POST request to Bungie.net
@@ -81,6 +89,47 @@ export async function SearchForPlayerByBungieID(displayName) {
 export async function GetProfileFromDestinyMembershipID(membershipType, membershipID) {
     const response = await GETRequest(`https://www.bungie.net/Platform/Destiny2/${membershipType}/Profile/${membershipID}/?components=100,200,1100`);
 
+    const manifest = await GETRequest("https://www.bungie.net/Platform/Destiny2/Manifest");
+    console.log(manifest);
+    const metricURL =`https://www.bungie.net${manifest.Response.jsonWorldComponentContentPaths.en.DestinyMetricDefinition}`;
+    console.log(metricURL);
+    const metricDefinition = await fetch(metricURL)
+        .then((result) => {
+            if (!result.ok) {
+                throw new Error("HTTP error " + result.status);
+            }
+            return result.json();
+        })
+        .catch(() => {
+            console.log("Failed a fetch");
+            return null;
+        });
+    console.log(metricDefinition);
+
+    var metricNameToHash = {};
+
+    for (let hash in metricDefinition)
+    {
+        var propertyName = metricDefinition[`${hash}`].displayProperties.name;
+        if (metricDefinition[`${hash}`].displayProperties.description.includes("Gambit"))
+            propertyName = "Gambit " + propertyName;
+        if (metricDefinition[`${hash}`].displayProperties.description.includes("Crucible"))
+            propertyName = "Crucible " + propertyName;
+        if (metricDefinition[`${hash}`].displayProperties.description.includes("Trials"))
+            propertyName = "Trials " + propertyName;
+        if (metricDefinition[`${hash}`].displayProperties.description.includes("week"))
+            propertyName += " (Weekly)";
+        if (metricDefinition[`${hash}`].displayProperties.description.includes("this Season"))
+            propertyName += " (Season)";
+        
+        if (metricNameToHash.hasOwnProperty(propertyName))
+        {
+            console.warn(`duplicate names: ${propertyName}\n${hash} - ${metricDefinition[`${hash}`].displayProperties.description}\n\n${metricNameToHash[`${propertyName}`]} - ${metricDefinition[`${metricNameToHash[`${propertyName}`]}`].displayProperties.description}`);
+            propertyName += `${metricDefinition[`${hash}`].index}`;
+        }
+        metricNameToHash[`${propertyName}`] = hash;
+    }
+    console.log(metricNameToHash);
     if (response.ErrorStatus !== "Success")
     {
         console.error(response);
@@ -88,8 +137,12 @@ export async function GetProfileFromDestinyMembershipID(membershipType, membersh
     }
 
     var simplified = {
-
+        "crucibleKillsOverall": {
+            "value": response.Response.metrics.data.metrics[metricNameToHash["Crucible Opponents Defeated"]].objectiveProgress.progress,
+            "name": metricDefinition[metricNameToHash["Crucible Opponents Defeated"]].displayProperties.name,
+            "description": metricDefinition[metricNameToHash["Crucible Opponents Defeated"]].displayProperties.description
+        }
     };
-
-    return response;
+    console.log(response);
+    return simplified;
 }
