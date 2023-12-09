@@ -2,15 +2,18 @@ import "./homeScreen.css"
 import welcomeImage from "../images/destiny-ghost.jpg"
 import { SearchForPlayerByBungieID, GetProfileFromDestinyMembershipID } from "../backend/bungieAPI.js";
 
-function SearchPlayer(){
-    SearchForPlayerByBungieID("CodedCole").then((data) => {
+async function SearchPlayer(){
+    await SearchForPlayerByBungieID("CodedCole").then((data) => {
         console.log(data);
         GetProfileFromDestinyMembershipID(data.searchResults[0].PrimaryDestinyMembershipType, data.searchResults[0].PrimaryDestinyMembershipID).then((data) => {
             console.log(data);
         });
     });
-    SearchForPlayerByBungieID("DJ Tears").then((data) => {
+    await SearchForPlayerByBungieID("DJ Tears").then((data) => {
         console.log(data);
+        GetProfileFromDestinyMembershipID(data.searchResults[0].PrimaryDestinyMembershipType, data.searchResults[0].PrimaryDestinyMembershipID).then((data) => {
+            console.log(data);
+        });
     });
 }
 

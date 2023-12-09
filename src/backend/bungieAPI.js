@@ -124,11 +124,13 @@ export async function SearchForPlayerByBungieID(displayName) {
         const result = response.Response.searchResults[i];
         var crossSaveMembershipType;
         var crossSaveMambershipID;
+        console.log(response.Response.searchResults[i]);
         // find destiny membership used for cross save, which is the player's primary account
         for (var dm = 0; dm < result.destinyMemberships.length; dm++) {
-            if (result.destinyMemberships[dm].crossSaveOverride === result.destinyMemberships[dm].membershipType) {
+            if (result.destinyMemberships[dm].crossSaveOverride === 0 ||  result.destinyMemberships[dm].crossSaveOverride === result.destinyMemberships[dm].membershipType) {
                 crossSaveMembershipType = result.destinyMemberships[dm].membershipType;
                 crossSaveMambershipID = result.destinyMemberships[dm].membershipId;
+                break;
             }
         }
 
@@ -204,7 +206,8 @@ export async function GetProfileFromDestinyMembershipID(membershipType, membersh
                 "traceRifleKills": CreateStatObject(metricDefinition, response.Response.metrics.data.metrics, metricNameToHash["Trace Rifle Final Blows"]),
             },
             "crucibleKillsOverall": CreateStatObject(metricDefinition, response.Response.metrics.data.metrics, metricNameToHash["Crucible Opponents Defeated"]),
-            "gambitKillsOverall": CreateStatObject(metricDefinition, response.Response.metrics.data.metrics, metricNameToHash["Gambit Invaders Defeated"]),
+            "gambitInvaderKillsOverall": CreateStatObject(metricDefinition, response.Response.metrics.data.metrics, metricNameToHash["Gambit Invaders Defeated"]),
+            "gambitBlockerKillsOverall": CreateStatObject(metricDefinition, response.Response.metrics.data.metrics, metricNameToHash["Gambit Blockers Defeated"]),
             "pvpKillsOverall": {
                 "value": response.Response.metrics.data.metrics[metricNameToHash["Crucible Opponents Defeated"]].objectiveProgress.progress +
                     response.Response.metrics.data.metrics[metricNameToHash["Crimson Days Opponents Defeated"]].objectiveProgress.progress +
@@ -212,12 +215,19 @@ export async function GetProfileFromDestinyMembershipID(membershipType, membersh
                     response.Response.metrics.data.metrics[metricNameToHash["Trials Opponents defeated"]].objectiveProgress.progress +
                     response.Response.metrics.data.metrics[metricNameToHash["Gambit Invaders Defeated"]].objectiveProgress.progress,
                 "name": "PvP Kills",
-                "description": "Players defeated over account lifetime."
+                "description": "Players defeated over account lifetime.",
+                "lowerIsBetter": false,
+                "icon": metricDefinition[metricNameToHash["Crucible Opponents Defeated"]].displayProperties.icon,
             },
+            "crucibleKDASeason": CreateStatObject(metricDefinition, response.Response.metrics.data.metrics, metricNameToHash["Crucible KDA (Season)"]),
+            "averagePvpKillsPerMatchSeason": CreateStatObject(metricDefinition, response.Response.metrics.data.metrics, metricNameToHash["Crucible Opponents Defeated Per Match (Season)"]),
+            "championKills": CreateStatObject(metricDefinition, response.Response.metrics.data.metrics, metricNameToHash["Champions Defeated"]),
         },
         "strikes": {
             "totalStrikes": CreateStatObject(metricDefinition, response.Response.metrics.data.metrics, metricNameToHash["Completions"]),
-            "nightfalls": CreateStatObject(metricDefinition, response.Response.metrics.data.metrics, metricNameToHash["Nightfall Challenge Completions"]),
+            "flawlessStrikes": CreateStatObject(metricDefinition, response.Response.metrics.data.metrics, metricNameToHash["Flawless Completions"]),
+            "killsPerStrikeSeason": CreateStatObject(metricDefinition, response.Response.metrics.data.metrics, metricNameToHash["Final Blows Per Strike (Season)"]),
+            "nightfallChallenges": CreateStatObject(metricDefinition, response.Response.metrics.data.metrics, metricNameToHash["Nightfall Challenge Completions"]),
             "nightfallScores": {
                 "armsDealer": CreateStatObject(metricDefinition, response.Response.metrics.data.metrics, metricNameToHash["Nightfall: \"The Arms Dealer\" Score"]),
                 "birthplaceOfTheVile": CreateStatObject(metricDefinition, response.Response.metrics.data.metrics, metricNameToHash["Nightfall: \"Birthplace of the Vile\" Score"]),
