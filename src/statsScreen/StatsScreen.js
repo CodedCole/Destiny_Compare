@@ -3,9 +3,19 @@ import vanguardLogo from '../images/vanguardSmallIconPNG.png';
 import crucibleLogo from '../images/CrucibleLogo.png';
 import playerLogo from '../images/emblemPlaceholderIcon.png';
 import AnyChart from 'anychart-react';
+import {SearchForPlayerByBungieID, GetProfileFromDestinyMembershipID} from '../backend/bungieAPI.js';
 import './statsScreen.css';
 
+var stats = {"isLoading": true}; 
+
+export async function getStats() {
+  var person = await SearchForPlayerByBungieID("CodedCole");
+  stats["response"] = await GetProfileFromDestinyMembershipID(person.searchResults[0].PrimaryDestinyMembershipType, person.searchResults[0].PrimaryDestinyMembershipID);
+  stats["isLoading"] = false; 
+}
+
 function StatsScreen(props) {
+  getStats(); 
     return (<div className="App">
       <header className="App-header">
         <div>
@@ -45,7 +55,7 @@ function StatsScreen(props) {
         </div>
         <div class="played_class">
           <p class="played_class_text">Most Played Class: Hunter</p>
-          <p class="played_class_text">Last Played Class: Hunter</p>
+          <p class="played_class_text">Last Played Class: {stats.isLoading ? "loading" : stats.response.lastPlayedClass}</p>
         </div>
         {/*<div class="pie_category">*/}
           <div class="pie_category">
@@ -54,7 +64,7 @@ function StatsScreen(props) {
               height={600}
               fontColor="#FFFFFF"
               type="pie"
-              data={[["choc", 1], ["straw", 1], ["van", 1], ["cookies", 2], ["water", 3], ["rainbow", 4]]}
+              data={[["Hunter", stats.isLoading ? 1 : stats.response.playtime.hunter], ["Titan", stats.isLoading ? 2 : stats.response.playtime.titan], ["Warlock", stats.isLoading ? 3 : stats.response.playtime.warlock]]}
               title="Playtime by Class"
             />
           </div>
