@@ -2,7 +2,9 @@ import overallLogo from '../images/AccountIcon.png';
 import vanguardLogo from '../images/vanguardSmallIconPNG.png';
 import crucibleLogo from '../images/CrucibleLogo.png';
 import playerLogo from '../images/emblemPlaceholderIcon.png';
+import AnyChart from 'anychart-react';
 import './statsScreen.css';
+
 function StatsScreen(props) {
     return (<div className="App">
       <header className="App-header">
@@ -45,7 +47,18 @@ function StatsScreen(props) {
           <p class="played_class_text">Most Played Class: Hunter</p>
           <p class="played_class_text">Last Played Class: Hunter</p>
         </div>
-        <div class="pie_category">
+        {/*<div class="pie_category">*/}
+          <div class="pie_category">
+            <AnyChart 
+              width={800}
+              height={600}
+              fontColor="#FFFFFF"
+              type="pie"
+              data={[["choc", 1], ["straw", 1], ["van", 1], ["cookies", 2], ["water", 3], ["rainbow", 4]]}
+              title="Playtime by Class"
+            />
+          </div>
+          {/*<div class="pie_category">
           <p class="played_class_text">Playtime By Class</p>
           <div class="donut">
             <p class="pie_text">491 HRS PLAYED</p>
@@ -62,7 +75,7 @@ function StatsScreen(props) {
           <p class="play_by_class">Hunter: 61,740</p>
           <p class="play_by_class">Warlock: 12,349</p>
           <p class="play_by_class">Titan: 8,232</p>
-        </div>
+</div>*/}
       </header>
     </div>
     )
