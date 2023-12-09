@@ -24,11 +24,13 @@
     position: absolute;
     text-align: right;
     right: calc(50% + 30px);
+    top: 40px;
 }
 #welcome h1 .right_of_center {
     position: absolute;
     text-align: left;
     left: calc(50% + 30px);
+    top: 40px;
 }
 
 #welcome img {
@@ -39,24 +41,24 @@
     width: 100%;
     height: auto;
     margin: 0;
-    padding: 0;
+    padding: 0; 
 }
 
 .search_boxes {
     display: flex;
     flex-direction: column;
-    padding: 10px calc(50% - 150px);
+    padding: 525px calc(50% - 150px) 5px;
 }
 
 .player_search {
     font-family: 'Familjen Grotesk', sans-serif;
-    background-color: #bbbbbb;
-    opacity: 0.3;
-    border: 1px solid #777777;
-    color: var(--primary-text);
+    background-color: #c27b24;
+    opacity: 0.4;
+    border: 1px solid #000000;
+    height: 35px;
+    margin-bottom: 10px;
 }
 
 .player_search::placeholder {
-    color: #111111;
-    opacity: 1;
+    color: #000000;
 }
