@@ -1,8 +1,28 @@
 import "./homeScreen.css"
-
 import welcomeImage from "../images/destiny-ghost.jpg"
+import { SearchForPlayerByBungieID, GetProfileFromDestinyMembershipID } from "../backend/bungieAPI.js";
+
+async function SearchPlayer(){
+    await SearchForPlayerByBungieID("CodedCole").then((data) => {
+        console.log(data);
+        GetProfileFromDestinyMembershipID(data.searchResults[0].PrimaryDestinyMembershipType, data.searchResults[0].PrimaryDestinyMembershipID).then((data) => {
+            console.log(data);
+        });
+    });
+    await SearchForPlayerByBungieID("DJ Tears").then((data) => {
+        console.log(data);
+        GetProfileFromDestinyMembershipID(data.searchResults[0].PrimaryDestinyMembershipType, data.searchResults[0].PrimaryDestinyMembershipID).then((data) => {
+            console.log(data);
+        });
+    });
+}
+
+// Test Players
+// CodedCole#5868
+// DJ Tears#4567
 
 export default function HomeScreen() {
+    
     return (
         <div id="welcome">
             <img src={welcomeImage} alt="" />
@@ -11,6 +31,7 @@ export default function HomeScreen() {
                 <input className="player_search" type="text" placeholder="Find Player..."></input>
                 <input className="player_search" type="text" placeholder="Compare With..."></input>
             </div>
+            <button onClick={SearchPlayer}>Compare</button>
         </div>
     );
 }
