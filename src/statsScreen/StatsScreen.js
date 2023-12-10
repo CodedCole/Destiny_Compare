@@ -12,6 +12,10 @@ export async function getStats() {
   var person = await SearchForPlayerByBungieID("CodedCole");
   stats["response"] = await GetProfileFromDestinyMembershipID(person.searchResults[0].PrimaryDestinyMembershipType, person.searchResults[0].PrimaryDestinyMembershipID);
   stats["isLoading"] = false; 
+  console.log("Last Class Played: " + stats.response.lastClassPlayed);
+  console.log("Hunter Playtime: " + stats.response.playtime.hunter);
+  console.log("Warlock Playtime: " + stats.response.playtime.warlock);
+  console.log("Titan Playtime: " + stats.response.playtime.titan);
 }
 
 function StatsScreen(props) {
@@ -54,8 +58,10 @@ function StatsScreen(props) {
           </div>
         </div>
         <div class="played_class">
-          <p class="played_class_text">Most Played Class: Hunter</p>
-          <p class="played_class_text">Last Played Class: {stats.isLoading ? "loading" : stats.response.lastPlayedClass}</p>
+          <p class="played_class_text">
+            Most Played Class: {stats.isLoading ? "loading" : (stats.response.playtime.hunter > stats.response.playtime.warlock && stats.response.playtime.hunter > stats.response.playtime.titan ? "Hunter" : (stats.response.playtime.warlock > stats.response.playtime.titan ? "Warlock" : "Titan"))}
+          </p>
+          <p class="played_class_text">Last Played Class: {stats.isLoading ? "loading" : stats.response.lastClassPlayed}</p>
         </div>
         {/*<div class="pie_category">*/}
           <div class="pie_category">
