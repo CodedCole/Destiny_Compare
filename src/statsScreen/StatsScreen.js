@@ -84,19 +84,19 @@ function StatsScreen(props) {
               title="Playtime by Class in Minutes"
             />
           </div>
-        {/*<div class="pie_category2">
+        <div class="pie_category2">
           <AnyChart 
                 width={500}
                 height={400}
                 background="#222222"
                 type="pie"
-                data={[["Hunter", stats1.isLoading ? 1 : stats1.response.playtime.hunter], ["Titan", stats1.isLoading ? 2 : stats1.response.playtime.titan], ["Warlock", stats1.isLoading ? 3 : stats1.response.playtime.warlock]]}
-                title="Playtime by Class in Minutes"
+                data={[["Automatic Rifle", stats1.isLoading ? 1 : stats1.response.kills.weapons.autoRifleKills.value], ["Rocket Launcher", stats1.isLoading ? 5 : stats1.response.kills.weapons.rocketLauncherKills.value], ["Shotgun", stats1.isLoading ? 6 : stats1.response.kills.weapons.shotgunKills.value], ["Sniper Rifle", stats1.isLoading ? 7 : stats1.response.kills.weapons.sniperRifleKills.value]]}
+                title="Kills by Weapon"
           />
-</div>*/}
+        </div>
         <div class="played_class">
           <p class="played_class_text">
-            Total Kills: {stats1.isLoading ? "loading" : stats1.response.kills.pvpKillsOverall.value}
+            Total Kills: {stats1.isLoading ? "loading" : stats1.response.kills.totalKillsOverall.value}
           </p>
         </div>
 
