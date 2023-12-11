@@ -2,8 +2,35 @@ import overallLogo from '../images/AccountIcon.png';
 import vanguardLogo from '../images/vanguardSmallIconPNG.png';
 import crucibleLogo from '../images/CrucibleLogo.png';
 import playerLogo from '../images/emblemPlaceholderIcon.png';
+import AnyChart from 'anychart-react';
+import {SearchForPlayerByBungieID, GetProfileFromDestinyMembershipID} from '../backend/bungieAPI.js';
 import './statsScreen.css';
+
+var stats1 = {"isLoading": true}; 
+var stats2 = {"isLoading": true}; 
+var person1 = {"isLoading": true}; 
+var person2 = {"isLoading": true}; 
+
+
+export async function getStats(name1, name2) {
+  person1 = await SearchForPlayerByBungieID(name1);
+  person1["isLoading"] = false; 
+  stats1["response"] = await GetProfileFromDestinyMembershipID(person1.searchResults[0].PrimaryDestinyMembershipType, person1.searchResults[0].PrimaryDestinyMembershipID);
+  stats1["isLoading"] = false; 
+
+  person2 = await SearchForPlayerByBungieID(name2);
+  person2["isLoading"] = false; 
+  stats2["response"] = await GetProfileFromDestinyMembershipID(person2.searchResults[0].PrimaryDestinyMembershipType, person2.searchResults[0].PrimaryDestinyMembershipID);
+  stats2["isLoading"] = false; 
+
+  console.log("Last Class Played: " + stats1.response.lastClassPlayed);
+  console.log("Hunter Playtime: " + stats1.response.playtime.hunter);
+  console.log("Warlock Playtime: " + stats1.response.playtime.warlock);
+  console.log("Titan Playtime: " + stats1.response.playtime.titan);
+}
+
 function StatsScreen(props) {
+  getStats("CodedCole", "DJ Tears"); 
     return (<div className="App">
       <header className="App-header">
         <div>
@@ -14,7 +41,7 @@ function StatsScreen(props) {
             <div class="blockLogo">
               <img src={playerLogo} />
             </div>
-            <p class="compare_inline">PLAYER NAME</p>
+            <p class="compare_inline"> {person1.isLoading ? "PLAYER NAME" : person1.searchResults[0].BungieDisplayName}</p>
           </div>
         </div>
         <div class="container compare_categories">
@@ -42,27 +69,45 @@ function StatsScreen(props) {
           </div>
         </div>
         <div class="played_class">
-          <p class="played_class_text">Most Played Class: Hunter</p>
-          <p class="played_class_text">Last Played Class: Hunter</p>
+          <p class="played_class_text">
+            Most Played Class: {stats1.isLoading ? "loading" : (stats1.response.playtime.hunter > stats1.response.playtime.warlock && stats1.response.playtime.hunter > stats1.response.playtime.titan ? "Hunter" : (stats1.response.playtime.warlock > stats1.response.playtime.titan ? "Warlock" : "Titan"))}
+          </p>
+          <p class="played_class_text">Last Played Class: {stats1.isLoading ? "loading" : stats1.response.lastClassPlayed}</p>
         </div>
-        <div class="pie_category">
-          <p class="played_class_text">Playtime By Class</p>
-          <div class="donut">
-            <p class="pie_text">491 HRS PLAYED</p>
+          <div class="pie_category">
+            <AnyChart 
+              width={500}
+              height={400}
+              background="#222222"
+              type="pie"
+              data={[["Hunter", stats1.isLoading ? 1 : stats1.response.playtime.hunter], ["Titan", stats1.isLoading ? 2 : stats1.response.playtime.titan], ["Warlock", stats1.isLoading ? 3 : stats1.response.playtime.warlock]]}
+              title="Playtime by Class in Minutes"
+            />
           </div>
-          <p class="play_by_class">Hunter: 307 hrs</p>
-          <p class="play_by_class">Warlock: 123 hrs</p>
-          <p class="play_by_class">Titan: 61 hrs</p>
+        <div class="pie_category2">
+          <AnyChart 
+                width={500}
+                height={400}
+                background="#222222"
+                type="pie"
+                data={[["Automatic Rifle", stats1.isLoading ? 1 : stats1.response.kills.weapons.autoRifleKills.value], ["Rocket Launcher", stats1.isLoading ? 5 : stats1.response.kills.weapons.rocketLauncherKills.value], ["Shotgun", stats1.isLoading ? 6 : stats1.response.kills.weapons.shotgunKills.value], ["Sniper Rifle", stats1.isLoading ? 7 : stats1.response.kills.weapons.sniperRifleKills.value]]}
+                title="Kills by Weapon"
+          />
         </div>
-        <div class="pie_category">
-          <p class="played_class_text">Kills By Class</p>
-          <div class="donut2">
-            <p class="pie_text">82,321</p>
-          </div>
-          <p class="play_by_class">Hunter: 61,740</p>
-          <p class="play_by_class">Warlock: 12,349</p>
-          <p class="play_by_class">Titan: 8,232</p>
+        <div class="played_class">
+          <p class="played_class_text">
+            Total Kills: {stats1.isLoading ? "loading" : stats1.response.kills.totalKillsOverall.value}
+          </p>
         </div>
+
+         {/* <AnyChart 
+            width={500}
+            height={400}
+            background="#222222"
+            type="pie"
+            data={[["Hunter", stats2.isLoading ? 1 : stats2.response.playtime.hunter], ["Titan", stats2.isLoading ? 2 : stats2.response.playtime.titan], ["Warlock", stats2.isLoading ? 3 : stats2.response.playtime.warlock]]}
+            title="Playtime by Class in Minutes"
+/>*/}
       </header>
     </div>
     )

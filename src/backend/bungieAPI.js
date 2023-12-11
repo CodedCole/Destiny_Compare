@@ -176,7 +176,7 @@ export async function GetProfileFromDestinyMembershipID(membershipType, membersh
 
     var simplified = {
         // playtime in minutes
-        "lastClassPlayed": (recentlyPlayedClass === 0 ? "titan" : (recentlyPlayedClass === 1 ? "hunter" : "warlock")),
+        "lastClassPlayed": (recentlyPlayedClass === 0 ? "Titan" : (recentlyPlayedClass === 1 ? "Hunter" : "Warlock")),
         "playtime": {
             "total": playtime[0] + playtime[1] + playtime[2],
             "titan": playtime[0],
