@@ -1,9 +1,11 @@
 import "./homeScreen.css"
 import welcomeImage from "../images/destiny-ghost.jpg"
 import { SearchForPlayerByBungieID, GetProfileFromDestinyMembershipID } from "../backend/bungieAPI.js";
-
+import { getStats } from "../statsScreen/statsScreen.js";
+let setPageFunc = () => {}
 async function SearchPlayer(){
-    await SearchForPlayerByBungieID("CodedCole").then((data) => {
+    await getStats("CodedCole", "DJ Tears");
+    /*await SearchForPlayerByBungieID("CodedCole").then((data) => {
         console.log(data);
         GetProfileFromDestinyMembershipID(data.searchResults[0].PrimaryDestinyMembershipType, data.searchResults[0].PrimaryDestinyMembershipID).then((data) => {
             console.log(data);
@@ -14,15 +16,16 @@ async function SearchPlayer(){
         GetProfileFromDestinyMembershipID(data.searchResults[0].PrimaryDestinyMembershipType, data.searchResults[0].PrimaryDestinyMembershipID).then((data) => {
             console.log(data);
         });
-    });
+    });//*/
+    setPageFunc(1);
 }
 
 // Test Players
 // CodedCole#5868
 // DJ Tears#4567
 
-export default function HomeScreen() {
-    
+export default function HomeScreen({setPage}) {
+    setPageFunc = setPage;
     return (
         <div id="welcome">
             <img src={welcomeImage} alt="" />

@@ -26,7 +26,7 @@ function App() {
     return (
       <div className="App">
         <Navbar page={page} setPage={setPage} />
-        <HomeScreen />
+        <HomeScreen setPage={setPage}/>
       </div>
     );
   }
